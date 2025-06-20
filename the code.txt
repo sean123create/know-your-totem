@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Know Your Totem – Zimbabwean Heritage</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #fff3e0);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #2e7d32;
+      text-align: center;
+    }
+    .search-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 60%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .totem-box {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+    .totem-box img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .poem {
+      background-color: #f1f8e9;
+      border-left: 5px solid #8bc34a;
+      padding: 15px;
+      font-style: italic;
+      margin-top: 15px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🦁 Know Your Totem 🐘</h1>
+  <p style="text-align:center;">Search and learn about your Zimbabwean totem, its values, origin, and praise poem.</p>
+
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Type your totem (e.g., Shumba, Hungwe, Mhofu, Zhou, Moyo, Nyati, Mhara, Dziva, Huku, Gudo)" oninput="searchTotem()">
+  </div>
+
+  <div id="info" class="totem-box" style="display: none;"></div>
+
+  <script>
+    const data = {
+      shumba: {
+        name: "Shumba – The Lion Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg",
+        history: "The Shumba (lion) clan is widely known for bravery, leadership, and royalty. In many traditional societies, Shumba clan members were warriors or chiefs, often respected for their strength and decision-making abilities. The lion symbolizes kingship and responsibility.",
+        values: "Bravery, Leadership, Authority",
+        poem: `Shumba, murambwi wevhu,  
+Munodya nyama makasviba,  
+Vana veChivi,  
+Makombe anokukumikidza,  
+Munofamba nehana dzesimba.`
+      },
+      mhofu: {
+        name: "Mhofu – The Eland Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Common_Eland_in_Kruger_National_Park.jpg",
+        history: "The Mhofu clan values grace, wisdom, and peace. The eland moves gently and respectfully, representing diplomacy and self-control. Mhofu people are often known as calm problem-solvers who avoid conflict.",
+        values: "Wisdom, Grace, Harmony",
+        poem: `Mhofu yemukono,  
+Vakomana vemakomo,  
+Maita zvenyu vana veMutekedza,  
+Makagarika semabwe emvura,  
+Vakuru venhaka.`
+      },
+      zhou: {
+        name: "Zhou – The Elephant Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/3/37/African_Bush_Elephant.jpg",
+        history: "Zhou clan members are tied to strength, patience, and wisdom. The elephant's memory and protective behavior represent family leadership and respect for history. Their calmness hides great power.",
+        values: "Wisdom, Strength, Patience",
+        poem: `Zhou, vakuru vechokwadi,  
+Makumbo mana asi munofamba zvinyoronyoro,  
+Makaita saMadzimbahwe,  
+Maparireyi enyika,  
+Munotakura zvisingatakuriki.`
+      },
+      moyo: {
+        name: "Moyo – The Heart Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/3/31/Heart_symbol_red_hollow.png",
+        history: "The Moyo clan symbolizes life, compassion, and unity. It is one of the oldest clans in Zimbabwe, often regarded as peaceful advisors and healers. The heart represents the center of humanity and emotion.",
+        values: "Compassion, Wisdom, Unity",
+        poem: `Moyo werudo,  
+Musimboti wehukama,  
+Vana vevhu,  
+Munotakura tsitsi,  
+Muchizorodza nyika.`
+      },
+      nyati: {
+        name: "Nyati – The Buffalo Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/e/e2/African_Buffalo_%28Syncerus_caffer%29.jpg",
+        history: "Nyati is a symbol of boldness and resilience. The buffalo is a powerful, protective animal known for loyalty and strength in the face of threats. This clan is known for their courage in defending community values.",
+        values: "Courage, Loyalty, Endurance",
+        poem: `Nyati yakasimba,  
+Munhu wemusungo,  
+Vana veChirumhanzu,  
+Munotinhira sevhu rinodoka,  
+Vafambisi venhaka.`
+      },
+      hungwe: {
+        name: "Hungwe – The Fish Eagle Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/African_fish_eagle_in_flight.jpg",
+        history: "Hungwe, the fish eagle, represents vision, independence, and nobility. Members of this clan are believed to be keen thinkers and strategic leaders with spiritual awareness.",
+        values: "Vision, Freedom, Spiritual Wisdom",
+        poem: `Hungwe gavi rinobhururuka,  
+Wona uri pamusoro pemvura,  
+Mutongi wenyika nenzvimbo,  
+Matarenda ane hungwaru,  
+Munotonga zvisinganzwisisike.`
+      },
+      sable: {
+        name: "Mhara – The Sable Antelope Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/4/48/Sable_antelope.jpg",
+        history: "This clan is known for elegance and focus. The sable antelope moves swiftly and gracefully, and members are often respected for their determination, order, and success in difficult paths.",
+        values: "Focus, Discipline, Elegance",
+        poem: `Mhara yemakwikwi,  
+Inomhanya usiku nezuva,  
+Vazukuru vaMutasa,  
+Vanokunda zvipingamupinyi,  
+Makomborero ezera.`
+      },
+      dziva: {
+        name: "Dziva – The Pool/Water Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/8/80/Pond_water_reflection.jpg",
+        history: "Dziva represents peace, depth, and adaptability. Like water, members of this clan adjust calmly to situations and are often reflective and spiritual. Water is life-giving and a symbol of renewal.",
+        values: "Peace, Adaptability, Reflection",
+        poem: `Dziva rinonyorovesa nyika,  
+Munobuda nepfungwa dzakadzama,  
+Vana veMudzimu mukuru,  
+Muchirapa nechokwadi,  
+Munounza rugare.`
+      },
+      huku: {
+        name: "Huku – The Chicken Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Hen_in_farmyard.jpg",
+        history: "The Huku clan is linked to care, protection, and resourcefulness. Just as a hen looks after her chicks, Huku members are often seen as nurturers, organizers, and defenders of home life.",
+        values: "Care, Protection, Resourcefulness",
+        poem: `Huku huru inounganidza vana,  
+Yakarereka musha wese,  
+Imi vanhu vakanaka,  
+Vagadziri vemisha,  
+Munotungamira nerudo.`
+      },
+      gudo: {
+        name: "Gudo – The Baboon Clan",
+        image: "https://upload.wikimedia.org/wikipedia/commons/3/32/Baboon_-_Ngorongoro.jpg",
+        history: "Gudo symbolizes intelligence, boldness, and adaptability. Though playful, the baboon is a survivor that uses wit to face challenges. Members are usually clever problem-solvers and resilient in harsh environments.",
+        values: "Intelligence, Survival, Humor",
+        poem: `Gudo rakangwara,  
+Rinoseka matambudziko,  
+Vazukuru vaTavengwa,  
+Munoshanda nehungwaru,  
+Vachiseka zvinhu zvakaoma.`
+      }
+    };
+
+    function searchTotem() {
+      let input = document.getElementById('search').value.toLowerCase().trim();
+      let totem = data[input];
+      const infoBox = document.getElementById("info");
+
+      if (totem) {
+        infoBox.style.display = "block";
+        infoBox.innerHTML = `
+          <img src="${totem.image}" alt="${totem.name}">
+          <h2>${totem.name}</h2>
+          <p><strong>Clan History:</strong> ${totem.history}</p>
+          <p><strong>Clan Values:</strong> ${totem.values}</p>
+          <div class="poem"><strong>Praise Poem (Madetembedzo):</strong><br>${totem.poem}</div>
+        `;
+      } else if (input === "") {
+        infoBox.style.display = "none";
+      } else {
+        infoBox.style.display = "block";
+        infoBox.innerHTML = `<p style="text-align:center;">Totem not found. Please try a different name.</p>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
